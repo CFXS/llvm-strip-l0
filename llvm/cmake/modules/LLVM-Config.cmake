@@ -125,7 +125,12 @@ endfunction(llvm_map_components_to_libraries)
 # available and not a list of the components.
 function(llvm_expand_pseudo_components out_components)
   set( link_components ${ARGN} )
-  foreach(c ${link_components})
+  foreach(cx ${link_components})
+    set(c ${cx})
+    if("${c}" STREQUAL "all")
+    set(c "ARM")
+    endif()
+    
     # add codegen, asmprinter, asmparser, disassembler
     list(FIND LLVM_TARGETS_TO_BUILD ${c} idx)
     if( NOT idx LESS 0 )
