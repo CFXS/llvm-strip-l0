@@ -8,10 +8,6 @@ if(POLICY CMP0116)
   cmake_policy(SET CMP0116 OLD)
 endif()
 
-set(CMAKE_AUTOMOC OFF) 
-set(CMAKE_AUTORCC OFF)
-set(CMAKE_AUTOUIC OFF)
-
 set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
 
 if(NOT DEFINED LLVM_VERSION_MAJOR)
@@ -454,8 +450,6 @@ set(LLVM_TARGETS_TO_BUILD
    ${LLVM_EXPERIMENTAL_TARGETS_TO_BUILD})
 list(REMOVE_DUPLICATES LLVM_TARGETS_TO_BUILD)
 
-message("LLVM Targets: ${LLVM_TARGETS_TO_BUILD}")
-
 option(LLVM_ENABLE_PIC "Build Position-Independent Code" ON)
 option(LLVM_ENABLE_MODULES "Compile with C++ modules enabled." OFF)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -592,17 +586,17 @@ endif()
 # components which may not strictly be necessary (tools, examples, and tests).
 #
 # This is primarily to support building smaller or faster project files.
-option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." OFF)
+option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." ON)
 option(LLVM_BUILD_TOOLS
-  "Build the LLVM tools. If OFF, just generate build targets." OFF)
+  "Build the LLVM tools. If OFF, just generate build targets." ON)
 
-option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." OFF)
+option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." ON)
 option(LLVM_BUILD_UTILS
-  "Build LLVM utility binaries. If OFF, just generate build targets." OFF)
+  "Build LLVM utility binaries. If OFF, just generate build targets." ON)
 
-option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." OFF)
+option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." ON)
 option(LLVM_BUILD_RUNTIMES
-  "Build the LLVM runtimes. If OFF, just generate build targets." OFF)
+  "Build the LLVM runtimes. If OFF, just generate build targets." ON)
 
 option(LLVM_BUILD_RUNTIME
   "Build the LLVM runtime libraries." ON)
