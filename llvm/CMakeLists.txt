@@ -10,10 +10,6 @@ endif()
 
 set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
 
-set(CMAKE_AUTOMOC OFF) 
-set(CMAKE_AUTORCC OFF)
-set(CMAKE_AUTOUIC OFF)
-
 if(NOT DEFINED LLVM_VERSION_MAJOR)
   set(LLVM_VERSION_MAJOR 15)
 endif()
@@ -194,8 +190,6 @@ mark_as_advanced(LLVM_EXTERNAL_PROJECT_BUILD_TOOL_ARGS)
 
 option(LLVM_DEPENDENCY_DEBUGGING "Dependency debugging mode to verify correctly expressed library dependencies (Darwin only)" OFF)
 
-option(LLVM_BUILD_STATIC "LLVM_BUILD_STATIC" ON)
-
 # Some features of the LLVM build may be disallowed when dependency debugging is
 # enabled. In particular you cannot use ccache because we want to force compile
 # operations to always happen.
@@ -341,24 +335,24 @@ set(LLVM_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # List of all targets to be built by default:
 set(LLVM_ALL_TARGETS
-  #AArch64
-  #AMDGPU
+  AArch64
+  AMDGPU
   ARM
-  #AVR
-  #BPF
-  #Hexagon
-  #Lanai
-  #Mips
-  #MSP430
-  #NVPTX
-  #PowerPC
-  #RISCV
-  #Sparc
-  #SystemZ
-  #VE
-  #WebAssembly
-  #X86
-  #XCore
+  AVR
+  BPF
+  Hexagon
+  Lanai
+  Mips
+  MSP430
+  NVPTX
+  PowerPC
+  RISCV
+  Sparc
+  SystemZ
+  VE
+  WebAssembly
+  X86
+  XCore
   )
 
 # List of targets with JIT support:
@@ -456,7 +450,7 @@ set(LLVM_TARGETS_TO_BUILD
    ${LLVM_EXPERIMENTAL_TARGETS_TO_BUILD})
 list(REMOVE_DUPLICATES LLVM_TARGETS_TO_BUILD)
 
-option(LLVM_ENABLE_PIC "Build Position-Independent Code" OFF)
+option(LLVM_ENABLE_PIC "Build Position-Independent Code" ON)
 option(LLVM_ENABLE_MODULES "Compile with C++ modules enabled." OFF)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   option(LLVM_ENABLE_MODULE_DEBUGGING "Compile with -gmodules." ON)
@@ -592,20 +586,20 @@ endif()
 # components which may not strictly be necessary (tools, examples, and tests).
 #
 # This is primarily to support building smaller or faster project files.
-option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." OFF)
+option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." ON)
 option(LLVM_BUILD_TOOLS
-  "Build the LLVM tools. If OFF, just generate build targets." OFF)
+  "Build the LLVM tools. If OFF, just generate build targets." ON)
 
-option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." OFF)
+option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." ON)
 option(LLVM_BUILD_UTILS
-  "Build LLVM utility binaries. If OFF, just generate build targets." OFF)
+  "Build LLVM utility binaries. If OFF, just generate build targets." ON)
 
-option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." OFF)
+option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." ON)
 option(LLVM_BUILD_RUNTIMES
-  "Build the LLVM runtimes. If OFF, just generate build targets." OFF)
+  "Build the LLVM runtimes. If OFF, just generate build targets." ON)
 
 option(LLVM_BUILD_RUNTIME
-  "Build the LLVM runtime libraries." OFF)
+  "Build the LLVM runtime libraries." ON)
 option(LLVM_BUILD_EXAMPLES
   "Build the LLVM example programs. If OFF, just generate build targets." OFF)
 option(LLVM_INCLUDE_EXAMPLES "Generate build targets for the LLVM examples" OFF)
@@ -628,7 +622,7 @@ option (LLVM_INCLUDE_DOCS "Generate build targets for llvm documentation." OFF)
 option (LLVM_ENABLE_DOXYGEN "Use doxygen to generate llvm API documentation." OFF)
 option (LLVM_ENABLE_SPHINX "Use Sphinx to generate llvm documentation." OFF)
 option (LLVM_ENABLE_OCAMLDOC "Build OCaml bindings documentation." OFF)
-option (LLVM_ENABLE_BINDINGS "Build bindings." OFF)
+option (LLVM_ENABLE_BINDINGS "Build bindings." ON)
 
 set(LLVM_INSTALL_DOXYGEN_HTML_DIR "${CMAKE_INSTALL_DOCDIR}/llvm/doxygen-html"
     CACHE STRING "Doxygen-generated HTML documentation install directory")
@@ -650,7 +644,7 @@ if(NOT DEFINED LLVM_DYLIB_COMPONENTS)
 endif()
 
 if(MSVC)
-  option(LLVM_BUILD_LLVM_C_DYLIB "Build LLVM-C.dll (Windows only)" OFF)
+  option(LLVM_BUILD_LLVM_C_DYLIB "Build LLVM-C.dll (Windows only)" ON)
   # Set this variable to OFF here so it can't be set with a command-line
   # argument.
   set (LLVM_LINK_LLVM_DYLIB OFF)
