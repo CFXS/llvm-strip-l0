@@ -10,6 +10,10 @@ endif()
 
 set(CMAKE_BUILD_WITH_INSTALL_NAME_DIR ON)
 
+set(CMAKE_AUTOMOC OFF) 
+set(CMAKE_AUTORCC OFF)
+set(CMAKE_AUTOUIC OFF)
+
 if(NOT DEFINED LLVM_VERSION_MAJOR)
   set(LLVM_VERSION_MAJOR 15)
 endif()
@@ -189,6 +193,8 @@ set(LLVM_EXTERNAL_PROJECT_BUILD_TOOL_ARGS "" CACHE STRING
 mark_as_advanced(LLVM_EXTERNAL_PROJECT_BUILD_TOOL_ARGS)
 
 option(LLVM_DEPENDENCY_DEBUGGING "Dependency debugging mode to verify correctly expressed library dependencies (Darwin only)" OFF)
+
+option(LLVM_BUILD_STATIC "LLVM_BUILD_STATIC" ON)
 
 # Some features of the LLVM build may be disallowed when dependency debugging is
 # enabled. In particular you cannot use ccache because we want to force compile
@@ -586,15 +592,15 @@ endif()
 # components which may not strictly be necessary (tools, examples, and tests).
 #
 # This is primarily to support building smaller or faster project files.
-option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." ON)
+option(LLVM_INCLUDE_TOOLS "Generate build targets for the LLVM tools." OFF)
 option(LLVM_BUILD_TOOLS
   "Build the LLVM tools. If OFF, just generate build targets." OFF)
 
-option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." ON)
+option(LLVM_INCLUDE_UTILS "Generate build targets for the LLVM utils." OFF)
 option(LLVM_BUILD_UTILS
   "Build LLVM utility binaries. If OFF, just generate build targets." OFF)
 
-option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." ON)
+option(LLVM_INCLUDE_RUNTIMES "Generate build targets for the LLVM runtimes." OFF)
 option(LLVM_BUILD_RUNTIMES
   "Build the LLVM runtimes. If OFF, just generate build targets." OFF)
 
@@ -644,7 +650,7 @@ if(NOT DEFINED LLVM_DYLIB_COMPONENTS)
 endif()
 
 if(MSVC)
-  option(LLVM_BUILD_LLVM_C_DYLIB "Build LLVM-C.dll (Windows only)" ON)
+  option(LLVM_BUILD_LLVM_C_DYLIB "Build LLVM-C.dll (Windows only)" OFF)
   # Set this variable to OFF here so it can't be set with a command-line
   # argument.
   set (LLVM_LINK_LLVM_DYLIB OFF)
